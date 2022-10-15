@@ -13,4 +13,9 @@ Saiba mais sobre as dependências utilizadas no projeto em:
 
 Mais informações em: 
 
-[online documentation](https://docs.flutter.dev/development/data-and-backend/state-mgmt/simple), que oferece tutorial, exemplos e guia de desenvolvimento.
+[documentação online](https://docs.flutter.dev/development/data-and-backend/state-mgmt/simple), que oferece tutorial, exemplos e guia de desenvolvimento.
+
+# Screenshots: 
+<img src="https://github.com/DeyvidJLira/sample_finance_app/blob/main/screenshot/screenshots_1.png" />
+<img src="https://github.com/DeyvidJLira/sample_finance_app/blob/main/screenshot/screenshots_2.png" />
+<img src="https://github.com/DeyvidJLira/sample_finance_app/blob/main/screenshot/screenshots_3.png" />

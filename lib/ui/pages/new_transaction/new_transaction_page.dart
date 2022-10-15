@@ -1,3 +1,4 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:finance_app_class/controller/transaction_controller.dart';
 import 'package:finance_app_class/model/category.dart';
 import 'package:finance_app_class/model/transaction.dart';
@@ -25,7 +26,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
   Category? _category;
   var _dateTime = DateTime.now();
 
-  var _txtDateTimeController = TextEditingController();
+  final _txtDateTimeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +79,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                 children: _transactionTypes
                     .map((e) => ChoiceChip(
                         selectedColor: e.color,
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
                         label: Text(e.label),
                         selected: e.type == _transactionType,
                         onSelected: (value) => setState(() {
@@ -89,7 +90,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
               const SizedBox(
                 height: 8,
               ),
-              Text("Categoria"),
+              const Text("Categoria"),
               Consumer<TransactionController>(
                   builder: (context, transactionController, child) {
                 return DropdownButtonFormField<Category>(
@@ -99,10 +100,11 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                       .toList(),
                   value: _category,
                   onChanged: (newValue) => _category = newValue,
-                  hint: Text("Selecione"),
+                  hint: const Text("Selecione"),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value == null) {
-                      return "Selecione uma categoria";
+                      return "Selecione uma categoria.";
                     }
                     return null;
                   },
@@ -114,18 +116,41 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
               ),
               TextFormField(
                 keyboardType: TextInputType.number,
+                inputFormatters: [
+                  CurrencyTextInputFormatter(
+                      locale: "pt_BR", decimalDigits: 2, symbol: '')
+                ],
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 decoration: const InputDecoration(
-                    labelText: "Valor", hintText: "0,00", prefix: Text("R\$")),
-                onSaved: (newValue) => _value = double.parse(newValue!),
+                    labelText: "Valor",
+                    hintText: "0,00",
+                    prefix: Text("R\$ "),
+                    helperText: "No máximo 999.999,99."),
+                maxLength: 10,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Informe um valor.";
+                  }
+                  final valueDouble = double.parse(
+                      value.replaceAll('.', '').replaceAll(',', '.'));
+                  if (valueDouble == 0) {
+                    return "Informe um valor diferente de 0";
+                  }
+                  return null;
+                },
+                onSaved: (newValue) => _value = double.parse(
+                    newValue!.replaceAll('.', '').replaceAll(',', '.')),
               ),
               const SizedBox(
                 height: 4,
               ),
               TextFormField(
                 decoration: const InputDecoration(labelText: "Descrição"),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                maxLength: 30,
                 validator: (value) {
-                  if (value!.length < 3) {
-                    return "Campo deve ter ao menos 3 caractéres.";
+                  if (value!.length < 3 || value.length > 30) {
+                    return "Campo deve ter ao menos 3 e no máximo 30 caractéres.";
                   }
                   return null;
                 },
@@ -140,6 +165,13 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                 decoration:
                     const InputDecoration(labelText: "Data da Operação"),
                 maxLength: 10,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Informe uma data.";
+                  }
+                  return null;
+                },
                 onTap: () async {
                   FocusScope.of(context).requestFocus(FocusNode());
                   DateTime? date = await showDatePicker(

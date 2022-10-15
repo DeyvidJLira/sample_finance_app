@@ -9,30 +9,14 @@ class TransactionController extends ChangeNotifier {
   final List<Category> _categories = [];
   final List<Transaction> _transactions = [];
 
-  List<Category> get categories => _categories;
-  List<Transaction> get transactions => _transactions;
-
   TransactionController() {
     _categories.addAll(CategoryMock.getCategories());
     _transactions.addAll(TransactionMock.generateTransactions(25, _categories));
     _transactions.sort(((a, b) => b.dateTime!.compareTo(a.dateTime!)));
   }
 
-  void add(Transaction item) {
-    _transactions.add(item);
-    _transactions.sort(((a, b) => b.dateTime!.compareTo(a.dateTime!)));
-    notifyListeners();
-  }
-
-  void removeByID(String id) {
-    _transactions.removeWhere((e) => e.id == id);
-    notifyListeners();
-  }
-
-  void removeByPosition(int index) {
-    _transactions.removeAt(index);
-    notifyListeners();
-  }
+  List<Category> get categories => _categories;
+  List<Transaction> get transactions => _transactions;
 
   double get getTotalIncoming {
     double value = 0;
@@ -52,5 +36,21 @@ class TransactionController extends ChangeNotifier {
       value += transaction.value;
     }
     return value;
+  }
+
+  void add(Transaction item) {
+    _transactions.add(item);
+    _transactions.sort(((a, b) => b.dateTime!.compareTo(a.dateTime!)));
+    notifyListeners();
+  }
+
+  void removeByID(String id) {
+    _transactions.removeWhere((e) => e.id == id);
+    notifyListeners();
+  }
+
+  void removeByPosition(int index) {
+    _transactions.removeAt(index);
+    notifyListeners();
   }
 }

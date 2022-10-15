@@ -1,16 +1,16 @@
 # finance_app_class
 
-A new Flutter project.
+Uma aplicação destinada a aula sobre provider e gerenciamento de estado.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Saiba mais sobre as dependências utilizadas no projeto em:
 
-A few resources to get you started if this is your first Flutter project:
+- [intl](https://pub.dev/packages/intl)
+- [uuid](https://pub.dev/packages/uuid)
+- [provider](https://pub.dev/packages/provider)
+- [currency_text_input_formatter](https://pub.dev/packages/currency_text_input_formatter)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Mais informações em: 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[online documentation](https://docs.flutter.dev/development/data-and-backend/state-mgmt/simple), que oferece tutorial, exemplos e guia de desenvolvimento.
